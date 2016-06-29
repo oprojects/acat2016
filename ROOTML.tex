@@ -29,7 +29,7 @@ You can see the flow char design in the (Figure \ref{rootr:label})
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=14pc]{img/rootr.png}\caption{\label{rootr:label} ROOT-R design.}
+\includegraphics[width=25pc]{img/rootr.png}\caption{\label{rootr:label} ROOT-R design.}
 \end{figure}
 
 
@@ -50,7 +50,7 @@ It is explained in the  section \ref{RMVA} ROOT-R with TMVA and section \ref{PYM
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=14pc]{img/tmva.png}\caption{\label{tmva:label} Machine Learning Tools in ROOT.}
+\includegraphics[width=25pc]{img/tmva.png}\caption{\label{tmva:label} Machine Learning Tools in ROOT.}
 \end{figure}
 
 
@@ -68,14 +68,14 @@ with different features.
 \end{itemize}
 
 \begin{figure}[h]
-\begin{minipage}{14pc}
-\includegraphics[width=14pc]{img/dl1.jpg}
+\begin{minipage}{15pc}
+\includegraphics[width=15pc]{img/dl1.jpg}
 \caption{\label{dl1}Booking methods with different dataloaders}
 \end{minipage}\hspace{2pc}%
-\begin{minipage}{14pc}
-\includegraphics[width=14pc]{img/dl2.jpg}
+\begin{minipage}{15pc}
+\includegraphics[width=15pc]{img/dl2.jpg}
 \caption{\label{dl2}Loading data from files.}
-\includegraphics[width=14pc]{img/dl3.jpg}
+\includegraphics[width=15pc]{img/dl3.jpg}
 \caption{\label{dl3}Loading data from files.}
 \end{minipage} 
 \end{figure}
@@ -83,12 +83,29 @@ with different features.
 
 
 \subsection{Variable Importance}
+TODO
+% Algorithm ranks the importance of a variable in
+% classfication processes.
+% \begin{itemize}  
+% \item The method take a subset of variables and compute
+% weights.
+% \begin{itemize}  
+% \item  Full variable set {V}
+% \item Variable subset {S}
+% \item Classifier Performance F(S)
+% \end{itemize}  
+% \item It is independent of the classifier.
+% \item Is a stochastic algorithm.
+% \end{itemize}  
 
+\clearpage
 \subsection{ROOT-R with TMVA}\label{RMVA}
 RMVA is a set of plugins for TMVA package based on ROOTR
 that allows new methods of classification and regression calling
 R's packages.
-
+Every method inherits from the base class RMethodBase (Figure \ref{rmvaplug})
+to create a plugin and in the class RMethodBase is created some objects of TDataFrame class to map
+the dataset from ROOT trees to dataframes in R.(Figure \ref{rmvadf}) 
 \begin{itemize}  
 \item (C50) C5.0 decision trees and rule-based models for pattern
 recognition.
@@ -104,15 +121,80 @@ Boosting framework, including Generalized Linear Model (GLM)
 and Gradient Boosted Decision Trees (GBDT). 
 \end{itemize}
 
-TODO
+We can to see the performance of the methods in the ROC Curve with a simple montecarlo simulation.(Figure \ref{rmvaroc})
+
+\begin{figure}[h]
+\centering
+\begin{minipage}{15pc}
+\includegraphics[width=16pc]{img/rmvaplugins.png}
+\caption{\label{rmvaplug}ROOTR and TMVA plugins system}
+\end{minipage}
+\begin{minipage}{15pc}
+\includegraphics[width=16pc]{img/rmvadf.jpg}
+\caption{\label{rmvadf}ROOTR and TMVA data flow.}
+\end{minipage}\hspace{2pc}%
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=25pc]{img/rmvaroc.png}\caption{\label{rmvaroc} ROC Curve for TMVA methods with ROOTR.}
+\end{figure}
+
+\clearpage
 \subsection{Python with TMVA(Scikit Learn)} \label{PYMVA}
 PyMVA is a set of TMVA plugins based on Python API that
 allows new methods of classification and regression calling
 Python's packages.
 
-\section{Incoming developments} 
-TODO
+Every method inherits from the base class PyMethodBase (Figure \ref{pymvaplug})
+to create a plugin and in the class PyMethodBase is created some objects of PyArrayObject class to map
+the dataset from ROOT trees to numpy arrays in python.(Figure \ref{pymvadf}) 
 
+Implemented Methods Based on Scikit-learn package
+\begin{itemize}
+\item PyRandomForest: in random forests each tree in the ensemble is built from a sample drawn with replacement (i.e., a bootstrap sample) from the training set.
+\item PyGTB (Gradient Trees Boosted) : Gradient Tree Boosting or Gradient Boosted Regression Trees (GBRT) is a generalization of boosting to arbitrary differentiable loss
+functions. GBRT is an accurate and effective off-the-shelf procedure that can be used for both regression and classification problems.
+\item PyAdaBoost (Adaptative Boosting):The core principle of AdaBoost is to fit a sequence of weak learners (i.e., models that are only slightly better than random guessing, such as small
+decision trees) on repeatedly modified versions of the data. 
+\end{itemize}
+
+We can to see the performance of the methods in the ROC Curve with a simple montecarlo simulation.(Figure \ref{pymvaroc})
+
+\begin{figure}[h]
+\centering
+\begin{minipage}{15pc}
+\includegraphics[width=16pc]{img/pymvaplugins.png}
+\caption{\label{pymvaplug}Python and TMVA plugins system}
+\end{minipage}\hspace{2pc}%
+\begin{minipage}{15pc}
+\includegraphics[width=16pc]{img/pymvadf.png}
+\caption{\label{pymvadf}Python and TMVA data flow.}
+\end{minipage}\hspace{2pc}%
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=25pc]{img/pymvaroc.png}\caption{\label{pymvaroc} ROC Curve for TMVA methods with Python.}
+\end{figure}
+
+
+\section{Incoming developments}
+New TMVA::Factory design that allows more flexiblility to
+integrate new techniques for:
+\begin{itemize}
+\item Cross validation
+\item Data storage and manipulation (HDF5, CSV, JSON,
+Custom Serialization FIles and SQL)
+\item Improved design that will allow to use threads and new
+parallelization technologies like OpenMP, MPI, cuda and
+TBB.
+\item New deep learning NN.
+\item Improved Support Vector Machine 
+\item  Additional deep learning plugins(deep belief nets and
+restricted boltzmann machines)
+\item Gaussian Processes
+\end{itemize}
 
 \subsection{Acknowledgments}
 The work of Omar. A. Zapata has been partially supported by Sostenibilidad-UdeA, UdeA/CODI grant IN361CE
