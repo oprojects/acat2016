@@ -3,11 +3,11 @@
 \begin{document}
 \title{Development of Machine Learning Tools in ROOT}
 
-\author{Omar A. Zapata$^2$, S. V. Gleyzer$^1$, L. Moneta$^3$}
+\author{Omar A. Zapata$^1$, S. V. Gleyzer$^2$, L. Moneta$^3$}
 
-\address{$^1$,University of Antioquia and Metropolitan Institute of Technology, Street 67 No. 53 - 108 Medellin Colombia}
-\address{$^2$,University of Florida and CERN, PH Dep. CH-1211 Geneva 23}
-\address{$^3$,CERN PH Dep. CH-1211 Geneva 23}
+\address{$^1$,University of Antioquia and Metropolitan Institute of Technology, PH/STF Dep.}
+\address{$^2$,University of Florida and CERN, PH/STF Dep.}
+\address{$^3$,CERN, PH/STF Dep.}
 
 \ead{Sergei.Gleyzer@cern.ch,Omar.Zapata@cern.ch,Lorenzo.Moneta@cern.ch}
 
@@ -21,18 +21,67 @@ ROOT is  a C++ data analysis framework, providing advanced statistical methods n
 
 \section{ROOT-R}
 R is a free software framework for statistical computing, which complements the functionality of ROOT, by including some of the latest tools developed by statistics and computing research groups. 
-ROOT-R package, a module in ROOT, which allows to use from the ROOT environment R functions using the low-level R C++ API provided by R. This interface opens the possibility to use in ROOT and with data stored in ROOT objects, the very large set of statistical tools present in  R. We will describe how this interface works, by converting ROOT C++ objects in R’s objects, which can be passed to the  R functions and then by converting the result back in ROOT objects. 
-The goal of ROOT-R is to use R in the ROOT environment and makes use of the R packages Rcpp and RInside
-\section{TMVA}
+ROOT-R package, a module in ROOT, which allows to use from the ROOT environment R functions using the low-level R C++ API provided by R. 
+This interface opens the possibility to use in ROOT and with data stored in ROOT objects, the very large set of statistical tools present in  R. 
+We will describe how this interface works, by converting ROOT C++ objects in R’s objects, which can be passed to the  R functions and then by converting the result back in ROOT objects. 
+The goal of ROOT-R is to use R in the ROOT environment and makes use of the R packages Rcpp and RInside (reference here1)
 
-\subsection{Data Loader}
+
+\section{TMVA}
+TMVA is ROOT's toolkit for multivariate data analysis
+that implements machine learning algorithms for
+classification and regression.
+It has a good set of algorithms widely used in HEP:
+\begin{itemize}  
+\item BDT(Boosted Decision Trees)
+\item ANN(Artificial Neural Networks)
+\item SVM(Support Vector Machine)
+\item LDA(Linear discriminant analysis)
+\item And more \ldots 
+\end{itemize}
+
+
+\subsection{DataLoader}
+
+TMVA DataLoader is a class that allows greater
+modularity and flexibility for training different classifiers
+with different features.
+
+\begin{itemize}  
+\item Every booked method can to have different dataset.(see image \ref{dl1})
+\item TMVA::DataLoader can load data from .root files and .csv (comma separated values) also is the class to add variables, spectators and targets. (see image \ref{dl2})
+\item The TMVA::DataLoader is the class that create TMVA::DataSet and TMVA::DataSetInfo for every method booked. (see image \ref{dl3})
+\item The class TMVA::DataLoader have a name that is a directory in the output file(.root). In these directory you can find the Train/Test data of the DataLoader.
+\end{itemize}
 
 \subsection{Variable Importance}
 
 \subsection{ROOT-R with TMVA}
+RMVA is a set of plugins for TMVA package based on ROOTR
+that allows new methods of classification and regression calling
+R's packages.
+
+\begin{itemize}  
+\item (C50) C5.0 decision trees and rule-based models for pattern
+recognition.
+\item (RSNNS)Neural Networks in R using the Stuttgart Neural
+Network Simulator (SNNS)
+\item (e1071) Support Vector Machine can be used to carry out
+general regression and classification (of nu and epsilon-type),
+as well as density-estimation. A formula interface is provided.
+\item eXtreme Gradient Boost (R package xgboost) An optimized
+general purpose gradient boosting library.
+\item It implements machine learning algorithms under the Gradient
+Boosting framework, including Generalized Linear Model (GLM)
+and Gradient Boosted Decision Trees (GBDT). 
+\end{itemize}
+
 TODO
 \subsection{Python with TMVA(Scikit Learn)}
-TODO
+PyMVA is a set of TMVA plugins based on Python API that
+allows new methods of classification and regression calling
+Python's packages.
+
 \section{Incoming developments} 
 TODO
 
@@ -126,18 +175,18 @@ and 	Sugimoto Y 1996 {\it Japan. J. Appl. Phys.} {\bf 35} L74
 \noindent which would be obtained by typing
 
 \begin{verbatim}
-\begin{\thebibliography}{9}
-\item Strite S and Morkoc H 1992 {\it J. Vac. Sci. Technol.} B {\bf 10} 1237 
-\item Jain S C, Willander M, Narayan J and van Overstraeten R 2000 
-{\it J. Appl. Phys}. {\bf 87} 965 
-\item Nakamura S, Senoh M, Nagahama S, Iwase N, Yamada T, Matsushita T, Kiyoku H 
-and 	Sugimoto Y 1996 {\it Japan. J. Appl. Phys.} {\bf 35} L74 
-\item Akasaki I, Sota S, Sakai H, Tanaka T, Koike M and Amano H 1996 
-{\it Electron. Lett.} {\bf 32} 1105 
-\item O'Leary S K, Foutz B E, Shur M S, Bhapkar U V and Eastman L F 1998 
-{\it J. Appl. Phys.} {\bf 83} 826 
-\item Jenkins D W and Dow J D 1989 {\it Phys. Rev.} B {\bf 39} 3317 
-\end{\thebibliography}
+% \begin{\thebibliography}{9}
+% \item Strite S and Morkoc H 1992 {\it J. Vac. Sci. Technol.} B {\bf 10} 1237 
+% \item Jain S C, Willander M, Narayan J and van Overstraeten R 2000 
+% {\it J. Appl. Phys}. {\bf 87} 965 
+% \item Nakamura S, Senoh M, Nagahama S, Iwase N, Yamada T, Matsushita T, Kiyoku H 
+% and 	Sugimoto Y 1996 {\it Japan. J. Appl. Phys.} {\bf 35} L74 
+% \item Akasaki I, Sota S, Sakai H, Tanaka T, Koike M and Amano H 1996 
+% {\it Electron. Lett.} {\bf 32} 1105 
+% \item O'Leary S K, Foutz B E, Shur M S, Bhapkar U V and Eastman L F 1998 
+% {\it J. Appl. Phys.} {\bf 83} 826 
+% \item Jenkins D W and Dow J D 1989 {\it Phys. Rev.} B {\bf 39} 3317 
+% \end{\thebibliography}
 \end{verbatim}
 
 \begin{center}
