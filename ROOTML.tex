@@ -6,48 +6,34 @@
 
 \author{Omar A. Zapata$^1$, S. V. Gleyzer$^2$, L. Moneta$^3$}
 
-\address{$^1$,University of Antioquia and Metropolitan Institute of Technology, PH/STF Dep.}
-\address{$^2$,University of Florida and CERN, PH/STF Dep.}
-\address{$^3$,CERN, PH/STF Dep.}
+\address{$^1$,University of Antioquia and Metropolitan Institute of Technology.}
+\address{$^2$,University of Florida and CERN.}
+\address{$^3$,CERN.}
 
 \ead{Sergei.Gleyzer@cern.ch,Omar.Zapata@cern.ch,Lorenzo.Moneta@cern.ch}
 
 \begin{abstract}
-ROOT , a data analysis framework, provides advanced statistical methods needed by the LHC experiments for analyzing their data. These include machine learning tools required for classification, regression and clustering. These methods are provided by the TMVA, a toolkit for multi-variate analysis within ROOT. We will present recent development in TMVA and new interfaces between ROOT and TMVA and other well known statistical tools based on R and Python.
-We will show a new modular design of TMVA, giving users a lot of flexibility, novel features for cross-validation, variable selection and parallelism.
+ROOT, a framework for data analysis, provides advanced statistical methods needed by the LHC experiments.
+These include machine learning tools for classification, regression and clustering, provided by the ROOT-integrated toolkit for multi-variate analysis (TMVA). 
+We present recent developments in TMVA and new interfaces between ROOT and other statistical tools written in R and Python.
 \end{abstract}
 
 \section{Introduction}
-ROOT \cite{Antcheva20092499} is  a C++ data analysis framework, providing advanced statistical methods needed by the HEP experiments for analysing their data. 
-
-\section{ROOT-R}
-R \cite{R} is a free software framework for statistical computing, which complements the functionality of ROOT, by including some of the latest tools developed by statistics and computing research groups. 
-ROOT-R package, a module in ROOT, which allows to use from the ROOT environment R functions using the low-level R C++ API provided by R. 
-This interface opens the possibility to use in ROOT and with data stored in ROOT objects, the very large set of statistical tools present in  R. 
-We will describe how this interface works, by converting ROOT C++ objects in R’s objects, which can be passed to the  R functions and then by converting the result back in ROOT objects. 
-The goal of ROOT-R is to use R in the ROOT environment and makes use of the R packages Rcpp and RInside.
-You can see the flow char design in the (Figure \ref{rootr:label})
-
-\begin{figure}[h]
-\centering
-\includegraphics[width=25pc]{img/rootr.png}\caption{\label{rootr:label} ROOT-R design.}
-\end{figure}
+ROOT  is  a C++ data analysis framework\cite{Antcheva20092499}, providing advanced statistical methods needed by the HEP experiments for analysing their data. 
 
 
 \section{TMVA}
-TMVA \cite{Hocker:2007ht} is ROOT's toolkit for multivariate data analysis
-that implements machine learning algorithms for
-classification and regression.
-It has a good set of algorithms widely used in HEP:
+TMVA is ROOT's toolkit for machine learning that implements algorithms for
+classification and regression\cite{Hocker:2007ht} .
+It has a good set of algorithms widely used in High Energy Physics (HEP):
 \begin{itemize}  
 \item BDT(Boosted Decision Trees)
 \item ANN(Artificial Neural Networks)
-\item SVM(Support Vector Machine)
-\item LDA(Linear discriminant analysis)
-\item And more \ldots 
+\item SVM(Support Vector Machines)
+\item and others \ldots 
 \end{itemize}
-TMVA has now a new set of plugins that is using python and R interfaces for classification, lets see (Figure \ref{tmva:label})
-It is explained in the  section \ref{RMVA} ROOT-R with TMVA and section \ref{PYMVA} Python with TMVA.
+Recently TMVA has  been undergoing a lot of improvements that include greater flexiblility, more modular design, new features and interfaces.
+Figure \ref{tmva:label} shows the interfaces between ROOT, TMVA and other statistical tools.
 
 \begin{figure}[h]
 \centering
@@ -65,7 +51,6 @@ with different features.
 \item Every booked method can to have different dataset.(Figure \ref{dl1})
 \item TMVA::DataLoader can load data from .root files and .csv (comma separated values) also is the class to add variables, spectators and targets. (Figure \ref{dl2})
 \item The TMVA::DataLoader is the class that create TMVA::DataSet and TMVA::DataSetInfo for every method booked. (Figure \ref{dl3})
-\item The class TMVA::DataLoader have a name that is a directory in the output file(.root). In these directory you can find the Train/Test data of the DataLoader.
 \end{itemize}
 
 \begin{figure}[h]
@@ -85,22 +70,21 @@ with different features.
 
 \subsection{Variable Importance}
 TODO
-% Algorithm ranks the importance of a variable in
-% classfication processes.
-% \begin{itemize}  
-% \item The method take a subset of variables and compute
-% weights.
-% \begin{itemize}  
-% \item  Full variable set {V}
-% \item Variable subset {S}
-% \item Classifier Performance F(S)
-% \end{itemize}  
-% \item It is independent of the classifier.
-% \item Is a stochastic algorithm.
-% \end{itemize}  
 
 \clearpage
-\subsection{ROOT-R with TMVA}\label{RMVA}
+\subsection{ROOT-R}
+R  is a free software framework for statistical computing\cite{R}, which complements the functionality of ROOT, by including some of the latest tools developed by statistics and computing research community. 
+We developed the ROOT-R package, implemented as a ROOT library, which allows the  use of R functions directly in ROOT.
+This interface opens a large set of statistical tools present in R to be used in ROOT. ROOT C++ objects are converted to R objects, which can be passed to the  R functions and if desired, back to ROOT objects. 
+The ROOT-R design flow chart is shown in (Figure \ref{rootr:label}). 
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=25pc]{img/rootr.png}\caption{\label{rootr:label} ROOT-R design.}
+\end{figure}
+
+
+\subsection{ROOT-R with TMVA (RMVA)}\label{RMVA}
 RMVA is a set of plugins for TMVA package based on ROOTR
 that allows new methods of classification and regression calling
 R's packages.
@@ -129,7 +113,7 @@ We can to see the performance of the methods in the ROC Curve with a simple mont
 \begin{minipage}{15pc}
 \includegraphics[width=16pc]{img/rmvaplugins.png}
 \caption{\label{rmvaplug}ROOTR and TMVA plugins system}
-\end{minipage}
+\end{minipage}\hspace{2pc}%
 \begin{minipage}{15pc}
 \includegraphics[width=16pc]{img/rmvadf.jpg}
 \caption{\label{rmvadf}ROOTR and TMVA data flow.}
@@ -142,7 +126,7 @@ We can to see the performance of the methods in the ROC Curve with a simple mont
 \end{figure}
 
 \clearpage
-\subsection{Python with TMVA(Scikit Learn)} \label{PYMVA}
+\subsection{Python with TMVA (PyMVA)} \label{PYMVA}
 PyMVA is a set of TMVA plugins based on Python API that
 allows new methods of classification and regression calling
 Python's packages.
@@ -188,13 +172,11 @@ integrate new techniques for:
 \item Data storage and manipulation (HDF5, CSV, JSON,
 Custom Serialization FIles and SQL)
 \item Improved design that will allow to use threads and new
-parallelization technologies like OpenMP, MPI, cuda and
-TBB.
-\item New deep learning NN.
-\item Improved Support Vector Machine 
+parallelization technologies like OpenMP, MPI, cuda, TBB and spark.
+\item New deep learning Neural Networks.
+\item Improved Support Vector Machines 
 \item  Additional deep learning plugins(deep belief nets and
 restricted boltzmann machines)
-\item Gaussian Processes
 \end{itemize}
 
 \subsection{Acknowledgments}
