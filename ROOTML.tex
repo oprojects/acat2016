@@ -24,7 +24,13 @@ R is a free software framework for statistical computing, which complements the 
 ROOT-R package, a module in ROOT, which allows to use from the ROOT environment R functions using the low-level R C++ API provided by R. 
 This interface opens the possibility to use in ROOT and with data stored in ROOT objects, the very large set of statistical tools present in  R. 
 We will describe how this interface works, by converting ROOT C++ objects in R’s objects, which can be passed to the  R functions and then by converting the result back in ROOT objects. 
-The goal of ROOT-R is to use R in the ROOT environment and makes use of the R packages Rcpp and RInside (reference here1)
+The goal of ROOT-R is to use R in the ROOT environment and makes use of the R packages Rcpp and RInside.
+You can see the flow char design in the (Figure \ref{rootr:label})
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=14pc]{img/rootr.png}\caption{\label{rootr:label} ROOT-R design.}
+\end{figure}
 
 
 \section{TMVA}
@@ -39,6 +45,13 @@ It has a good set of algorithms widely used in HEP:
 \item LDA(Linear discriminant analysis)
 \item And more \ldots 
 \end{itemize}
+TMVA has now a new set of plugins that is using python and R interfaces for classification, lets see (Figure \ref{tmva:label})
+It is explained in the  section \ref{RMVA} ROOT-R with TMVA and section \ref{PYMVA} Python with TMVA.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=14pc]{img/tmva.png}\caption{\label{tmva:label} Machine Learning Tools in ROOT.}
+\end{figure}
 
 
 \subsection{DataLoader}
@@ -48,15 +61,30 @@ modularity and flexibility for training different classifiers
 with different features.
 
 \begin{itemize}  
-\item Every booked method can to have different dataset.(see image \ref{dl1})
-\item TMVA::DataLoader can load data from .root files and .csv (comma separated values) also is the class to add variables, spectators and targets. (see image \ref{dl2})
-\item The TMVA::DataLoader is the class that create TMVA::DataSet and TMVA::DataSetInfo for every method booked. (see image \ref{dl3})
+\item Every booked method can to have different dataset.(Figure \ref{dl1})
+\item TMVA::DataLoader can load data from .root files and .csv (comma separated values) also is the class to add variables, spectators and targets. (Figure \ref{dl2})
+\item The TMVA::DataLoader is the class that create TMVA::DataSet and TMVA::DataSetInfo for every method booked. (Figure \ref{dl3})
 \item The class TMVA::DataLoader have a name that is a directory in the output file(.root). In these directory you can find the Train/Test data of the DataLoader.
 \end{itemize}
 
+\begin{figure}[h]
+\begin{minipage}{14pc}
+\includegraphics[width=14pc]{img/dl1.jpg}
+\caption{\label{dl1}Booking methods with different dataloaders}
+\end{minipage}\hspace{2pc}%
+\begin{minipage}{14pc}
+\includegraphics[width=14pc]{img/dl2.jpg}
+\caption{\label{dl2}Loading data from files.}
+\includegraphics[width=14pc]{img/dl3.jpg}
+\caption{\label{dl3}Loading data from files.}
+\end{minipage} 
+\end{figure}
+
+
+
 \subsection{Variable Importance}
 
-\subsection{ROOT-R with TMVA}
+\subsection{ROOT-R with TMVA}\label{RMVA}
 RMVA is a set of plugins for TMVA package based on ROOTR
 that allows new methods of classification and regression calling
 R's packages.
@@ -77,7 +105,7 @@ and Gradient Boosted Decision Trees (GBDT).
 \end{itemize}
 
 TODO
-\subsection{Python with TMVA(Scikit Learn)}
+\subsection{Python with TMVA(Scikit Learn)} \label{PYMVA}
 PyMVA is a set of TMVA plugins based on Python API that
 allows new methods of classification and regression calling
 Python's packages.
@@ -89,6 +117,7 @@ TODO
 \subsection{Acknowledgments}
 The work of Omar. A. Zapata has been partially supported by Sostenibilidad-UdeA, UdeA/CODI grant IN361CE
 and COLCIENCIAS through the grant number 111-556-934918.
+Computer Science Center, Metropolitan Institute of Technology - Medellin/Colombia.
 
 
 \subsection{Appendices}
