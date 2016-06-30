@@ -70,28 +70,29 @@ with different features.
 
 
 \subsection{Variable Importance}
-Algorithm ranks the importance of a variable in
-classfication processes \cite{gleyzer2008paradigm}. Figure \ref{vi}
-\begin{itemize}
-\item The method take a subset of variables and compute
-weights.
-
-\begin{equation}
-FI(X_{i})= \sum_{S\subseteq{V}:X_{i}\in{S}}{F(S)xW_{X_{i}}(S)}
-\end{equation}
-\begin{itemize}
-\item Full variable set {V}
-\item Variable subset {S}
-\item Classifier Performance F(S)
-\end{itemize}
-\item It is independent of the classifier.
-\item Is a stochastic algorithm.
-\end{itemize}
-
-\begin{figure}[h]
-\centering
-\includegraphics[width=25pc]{img/vi.png}\caption{\label{vi} Histogram ranking the variables.}
-\end{figure}
+We implement an algorithm to compute variable importance that is described in \cite{gleyzer2008paradigm}. 
+% Algorithm ranks the importance of a variable in
+% classfication processes \cite{gleyzer2008paradigm}. Figure \ref{vi}
+% \begin{itemize}
+% \item The method take a subset of variables and compute
+% weights.
+% 
+% \begin{equation}
+% FI(X_{i})= \sum_{S\subseteq{V}:X_{i}\in{S}}{F(S)xW_{X_{i}}(S)}
+% \end{equation}
+% \begin{itemize}
+% \item Full variable set {V}
+% \item Variable subset {S}
+% \item Classifier Performance F(S)
+% \end{itemize}
+% \item It is independent of the classifier.
+% \item Is a stochastic algorithm.
+% \end{itemize}
+% 
+% \begin{figure}[h]
+% \centering
+% \includegraphics[width=25pc]{img/vi.png}\caption{\label{vi} Histogram ranking the variables.}
+% \end{figure}
 
 
 
