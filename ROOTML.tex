@@ -19,8 +19,9 @@ We present recent developments in TMVA and new interfaces between ROOT and other
 \end{abstract}
 
 \section{Introduction}
-ROOT  is  a C++ data analysis framework\cite{Antcheva20092499}, providing advanced statistical methods needed by the HEP experiments for analysing their data. 
-
+ROOT  is  a C++ data analysis framework\cite{Antcheva20092499}, 
+with a modular design that privide statistical methods, advanced visualization and storage libraries 
+needed by the High Energy Physics experiments for analysing their data.
 
 \section{TMVA}
 TMVA is ROOT's toolkit for machine learning that implements algorithms for
@@ -48,9 +49,9 @@ modularity and flexibility for training different classifiers
 with different features.
 
 \begin{itemize}  
-\item Every booked method can to have different dataset.(Figure \ref{dl1})
-\item TMVA::DataLoader can load data from .root files and .csv (comma separated values) also is the class to add variables, spectators and targets. (Figure \ref{dl2})
-\item The TMVA::DataLoader is the class that create TMVA::DataSet and TMVA::DataSetInfo for every method booked. (Figure \ref{dl3})
+\item Every booked method can to have different dataset. Figure \ref{dl1}
+\item TMVA::DataLoader can load data from .root files and .csv (comma separated values) also is the class to add variables, spectators and targets. Figure \ref{dl2}
+\item The TMVA::DataLoader is the class that create TMVA::DataSet and TMVA::DataSetInfo for every method booked. Figure \ref{dl3}
 \end{itemize}
 
 \begin{figure}[h]
@@ -62,16 +63,38 @@ with different features.
 \includegraphics[width=15pc]{img/dl2.jpg}
 \caption{\label{dl2}Loading data from files.}
 \includegraphics[width=15pc]{img/dl3.jpg}
-\caption{\label{dl3}Loading data from files.}
+\caption{\label{dl3}Storing data in objects in the class MethodBase.}
 \end{minipage} 
 \end{figure}
 
 
 
 \subsection{Variable Importance}
-TODO
+Algorithm ranks the importance of a variable in
+classfication processes \cite{gleyzer2008paradigm}. Figure \ref{vi}
+\begin{itemize}
+\item The method take a subset of variables and compute
+weights.
 
-\clearpage
+\begin{equation}
+FI(X_{i})= \sum_{S\subseteq{V}:X_{i}\in{S}}{F(S)xW_{X_{i}}(S)}
+\end{equation}
+\begin{itemize}
+\item Full variable set {V}
+\item Variable subset {S}
+\item Classifier Performance F(S)
+\end{itemize}
+\item It is independent of the classifier.
+\item Is a stochastic algorithm.
+\end{itemize}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=25pc]{img/vi.png}\caption{\label{vi} Histogram ranking the variables.}
+\end{figure}
+
+
+
 \subsection{ROOT-R}
 R  is a free software framework for statistical computing\cite{R}, which complements the functionality of ROOT, by including some of the latest tools developed by statistics and computing research community. 
 We developed the ROOT-R package, implemented as a ROOT library, which allows the  use of R functions directly in ROOT.
@@ -93,17 +116,14 @@ to create a plugin and in the class RMethodBase is created some objects of TData
 the dataset from ROOT trees to dataframes in R.(Figure \ref{rmvadf}) 
 \begin{itemize}  
 \item (C50) C5.0 decision trees and rule-based models for pattern
-recognition.
+recognition\cite{c50}.
 \item (RSNNS)Neural Networks in R using the Stuttgart Neural
-Network Simulator (SNNS)
+Network Simulator (SNNS)\cite{rsnns}.
 \item (e1071) Support Vector Machine can be used to carry out
 general regression and classification (of nu and epsilon-type),
-as well as density-estimation. A formula interface is provided.
+as well as density-estimation. A formula interface is provided\cite{e1071}.
 \item eXtreme Gradient Boost (R package xgboost) An optimized
-general purpose gradient boosting library.
-\item It implements machine learning algorithms under the Gradient
-Boosting framework, including Generalized Linear Model (GLM)
-and Gradient Boosted Decision Trees (GBDT). 
+general purpose gradient boosting library\cite{chen2015xgboost}.
 \end{itemize}
 
 We can to see the performance of the methods in the ROC Curve with a simple montecarlo simulation.(Figure \ref{rmvaroc})
@@ -135,7 +155,7 @@ Every method inherits from the base class PyMethodBase (Figure \ref{pymvaplug})
 to create a plugin and in the class PyMethodBase is created some objects of PyArrayObject class to map
 the dataset from ROOT trees to numpy arrays in python.(Figure \ref{pymvadf}) 
 
-Implemented Methods Based on Scikit-learn package
+Implemented Methods Based on Scikit-learn package\cite{pedregosa2011scikit}.
 \begin{itemize}
 \item PyRandomForest: in random forests each tree in the ensemble is built from a sample drawn with replacement (i.e., a bootstrap sample) from the training set.
 \item PyGTB (Gradient Trees Boosted) : Gradient Tree Boosting or Gradient Boosted Regression Trees (GBRT) is a generalization of boosting to arbitrary differentiable loss

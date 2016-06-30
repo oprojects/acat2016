@@ -42,6 +42,41 @@ keywords = "Visualization ",
 abstract = "\{ROOT\} is an object-oriented C++ framework conceived in the high-energy physics (HEP) community, designed for storing and analyzing petabytes of data in an efficient way. Any instance of a C++ class can be stored into a \{ROOT\} file in a machine-independent compressed binary format. In \{ROOT\} the \{TTree\} object container is optimized for statistical data analysis over very large data sets by using vertical data storage techniques. These containers can span a large number of files on local disks, the web, or a number of different shared file systems. In order to analyze this data, the user can chose out of a wide set of mathematical and statistical functions, including linear algebra classes, numerical algorithms such as integration and minimization, and various methods for performing regression analysis (fitting). In particular, the RooFit package allows the user to perform complex data modeling and fitting while the RooStats library provides abstractions and implementations for advanced statistical tools. Multivariate classification methods based on machine learning techniques are available via the \{TMVA\} package. A central piece in these analysis tools are the histogram classes which provide binning of one- and multi-dimensional data. Results can be saved in high-quality graphical formats like Postscript and \{PDF\} or in bitmap formats like \{JPG\} or GIF. The result can also be stored into \{ROOT\} macros that allow a full recreation and rework of the graphics. Users typically create their analysis macros step by step, making use of the interactive C++ interpreter CINT, while running over small data samples. Once the development is finished, they can run these macros at full compiled speed over large data sets, using on-the-fly compilation, or by creating a stand-alone batch program. Finally, if processing farms are available, the user can reduce the execution time of intrinsically parallel tasks — e.g. data mining in \{HEP\} — by using PROOF, which will take care of optimally distributing the work over the available resources in a transparent way. Program summary Program title: \{ROOT\} Catalogue identifier: AEFA_v1_0 Program summary URL: http://cpc.cs.qub.ac.uk/summaries/AEFA_v1_0.html Program obtainable from: \{CPC\} Program Library, Queen's University, Belfast, N. Ireland Licensing provisions: \{LGPL\} No. of lines in distributed program, including test data, etc.: 3 044 581 No. of bytes in distributed program, including test data, etc.: 36 325 133 Distribution format: tar.gz Programming language: C++ Computer: Intel i386, Intel x86-64, Motorola PPC, Sun Sparc, \{HP\} PA-RISC Operating system: GNU/Linux, Windows XP/Vista, Mac \{OS\} X, FreeBSD, OpenBSD, Solaris, HP-UX, \{AIX\} Has the code been vectorized or parallelized?: Yes RAM: &gt; 55   Mbytes Classification: 4, 9, 11.9, 14 Nature of problem: Storage, analysis and visualization of scientific data Solution method: Object store, wide range of analysis algorithms and visualization methods Additional comments: For an up-to-date author list see: http://root.cern.ch/drupal/content/root-development-team and http://root.cern.ch/drupal/content/former-root-developers Running time: Depending on the data size and complexity of analysis algorithms References:[1] http://root.cern.ch. "
 }
 
+@article{gleyzer2008paradigm,
+  title={PARADIGM, a decision making framework for variable selection and reduction in high energy physics},
+  author={Gleyzer, Sergei V and Prosper, Harrison B},
+  journal={PoS},
+  pages={067},
+  year={2008}
+}
+
+@Article{rsnns,
+    title = {Neural Networks in {R} Using the Stuttgart Neural Network Simulator: {RSNNS}},
+    author = {Christoph Bergmeir and  Jos\'e M. Ben\'itez},
+    journal = {Journal of Statistical Software},
+    year = {2012},
+    volume = {46},
+    number = {7},
+    pages = {1--26},
+    url = {http://www.jstatsoft.org/v46/i07/},
+  }
+
+@article{chen2015xgboost,
+  title={xgboost: eXtreme Gradient Boosting},
+  author={Chen, Tianqi and He, Tong},
+  journal={R package version 0.4-2},
+  year={2015}
+}
+
+@article{pedregosa2011scikit,
+  title={Scikit-learn: Machine learning in Python},
+  author={Pedregosa, Fabian and Varoquaux, Ga{\"e}l and Gramfort, Alexandre and Michel, Vincent and Thirion, Bertrand and Grisel, Olivier and Blondel, Mathieu and Prettenhofer, Peter and Weiss, Ron and Dubourg, Vincent and others},
+  journal={Journal of Machine Learning Research},
+  volume={12},
+  number={Oct},
+  pages={2825--2830},
+  year={2011}
+}
 
  @Manual{R,
     title = {R: A Language and Environment for Statistical Computing},
@@ -53,3 +88,18 @@ abstract = "\{ROOT\} is an object-oriented C++ framework conceived in the high-e
   }
 
   
+@Manual{c50,
+    title = {C50: C5.0 Decision Trees and Rule-Based Models},
+    author = {Max Kuhn and Steve Weston and Nathan Coulter and Mark Culp. C code for C5.0 by R. Quinlan},
+    year = {2015},
+    note = {R package version 0.1.0-24},
+    url = {https://CRAN.R-project.org/package=C50},
+  }
+@Manual{e1071,
+    title = {e1071: Misc Functions of the Department of Statistics, Probability
+Theory Group (Formerly: E1071), TU Wien},
+    author = {David Meyer and Evgenia Dimitriadou and Kurt Hornik and Andreas Weingessel and Friedrich Leisch},
+    year = {2015},
+    note = {R package version 1.6-7},
+    url = {https://CRAN.R-project.org/package=e1071},
+  }
