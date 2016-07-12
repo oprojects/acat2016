@@ -25,13 +25,13 @@
 
 
 \begin{abstract}
-ROOT is a framework for large-scale data analysis that provides basic and advanced statistical methods used by the LHC experiments. In particular, these include machine learning algorithms from the ROOT-integrated Toolkit for Multivariate Analysis (TMVA). We present recent developments in TMVA as well as the interfaces between ROOT and other statistical tools, such as R.
+ROOT is a framework for large-scale data analysis that provides basic and advanced statistical methods used by the LHC experiments. In particular, these include machine learning algorithms from the ROOT-integrated Toolkit for Multivariate Analysis (TMVA). In what follows, we present several recent developments in TMVA such as new modular design, new variable importance and cross-validation features and interfaces to other statistical and machine-learning software packages written in R and python.
 \end{abstract}
 
 
 
 \section{Introduction}
-ROOT is a modular object-oriented C++ data analysis framework that provides statistical methods, advanced visualization and storage libraries for the data analysis of High-Energy Physics (HEP) experiments \cite{Antcheva20092499}. TMVA is a ROOT-integrated toolkit that implements Machine-learning algorithms \cite{Hocker:2007ht}. Figure \ref{tmva:label} shows the interfaces between ROOT, TMVA and other statistical tools. As part of the Machine-learning Toolbox, TMVA provides a set of algorithms widely used in High Energy Physics (HEP):
+ROOT, an object-oriented data analysis framework, provides statistical methods, visualization and storage libraries for the data analysis of High-Energy Physics (HEP) experiments \cite{Antcheva20092499}. Although designed for HEP applications, ROOT is general enough and used outside of HEP. In addition to the above, ROOT provides machine learning tools with the Toolkit for Multivariate Analysis (TMVA) \cite{Hocker:2007ht}. TMVA provides a set of algorithms widely used in High Energy Physics (HEP) such as:
 
 \begin{itemize}  
 \item Boosted Decision Trees (BDT)
@@ -39,7 +39,7 @@ ROOT is a modular object-oriented C++ data analysis framework that provides stat
 \item Support Vector Machines (SVM)
 \item and others
 \end{itemize}
-Recently TMVA has  been undergoing a lot of improvements targeting  greater flexibility, more modular design and novel features and interfaces. In the next sections we describe some of the new features and functionality of TMVA.
+Figure \ref{tmva:label} shows the relationship between ROOT, TMVA and other statistical packages like R. Recently, TMVA has  been undergoing significant improvements targeting greater flexibility, modular design and novel features and interfaces. In the next sections we describe some of the new functionality and features of TMVA.
 
 
 \begin{figure}[h]
@@ -48,7 +48,9 @@ Recently TMVA has  been undergoing a lot of improvements targeting  greater flex
 \end{figure}
 
 \subsection{DataLoader}
-DataLoader is a new class in TMVA that allows greater modularity and flexibility for training different classifiers with different features. With DataLoaders a user defines which data and features will be used during training. Multiple DataLoaders are allowed at the same time. Figures \ref{dl1}, \ref{dl2} and \ref{dl3} show the structure of the TMVA::Factory class and the new DataLoader class. The DataLoader class currently supports ROOT and comma-separated value (csv) files.
+DataLoader is a new class in TMVA that creates greater flexibility and modularity in training different combinations of classifiers and variables\cite{Hocker:2007ht}. Prior to the DataLoader class, the choice of variables was defined once and could not be changed later. In contrast, the DataLoader class allows a packaging of different choices of variables, methods with the data. This further makes other features, such as cross-validation and variable importance, to be implemented.
+
+Multiple DataLoaders are possible at the same time. Figures \ref{dl1}, \ref{dl2} and \ref{dl3} show the structure of the DataLoader class. ROOT and comma-separated value (csv) files are supported in the DataLoader class.
 
 
 \begin{figure}[h]
@@ -65,17 +67,20 @@ DataLoader is a new class in TMVA that allows greater modularity and flexibility
 \end{figure}
 
 
-\subsection{Variable Importance}
-In addition to increasing TMVA modularity, a number of algorithms providing user with useful information have been added. For example, a stochastic algorithm described in \cite{gleyzer2008paradigm} for computing variable importance, 
-has been implemented in TMVA. Figure \ref{vi} shows a sample variable importance plot for a basic example in TMVA.
+\subsection{New Features}
+In addition, a number of algorithms providing user with useful information have been added, such as cross-validation and variable importance. 
 
-\clearpage
+\subsubsection{Cross Validation} 
+
+\subsubsection{Variable Importance}
+Currently, TMVA provides a number of method-specific variable importance algorithms. Each one is relevant only to the method chosen and is computed during construction. For example, for decision trees variable importance is derived by counting the number of splits for each variable weighted by the square of the information gained from the split,   or for neural networks, as the sum of weights between the inputs and the hidden layer. In addition to these, a new method-independent variable algorithm was added. This algorithm based on ref.[] computes the variable importance in the context of classifier performance. In this method, a number of seeds are randomly generated in the feature space. Each seed corresponds to a feature set from which classifiers are constructed. Contribution to classifier performance of each feature is measured for each seed by removing the feature and measuring a change in classifier performance. Figure \ref{vi} shows a sample variable importance plot for a basic example in TMVA.
+
 \begin{figure}[h]
 \centering
 \includegraphics[width=25pc]{img/vi.png}\caption{\label{vi} Histogram ranking the variables.}
 \end{figure}
 
-
+\clearpage
 \subsection{ROOT-R and RMVA}\label{ROOTR}
 R  is a free software framework for statistical computing\cite{R}. We developed the ROOT-R package which allows the  use of R functions directly in ROOT. This interface opens a large set of statistical tools in R for use within ROOT. The ROOT-R interface design is shown in Figure \ref{rootr:label}. 
 
@@ -98,7 +103,6 @@ Various machine-learning methods from R can be tried within the TMVA framework, 
 
 
 \begin{figure}[h]
-\centering
 \begin{minipage}{15pc}
 \includegraphics[width=16pc]{img/rmvaplugins.png}
 \caption{\label{rmvaplug}ROOTR and TMVA plugins system}
@@ -114,8 +118,10 @@ Various machine-learning methods from R can be tried within the TMVA framework, 
 \begin{figure}[h]
 \centering
 \includegraphics[width=25pc]{img/rmvaroc.png}\caption{\label{rmvaroc} ROC Curves for RMVA methods}
+\vspace{10cm}
 \end{figure}
 
+\clearpage
 \subsection{Python with TMVA (PyMVA)} \label{PYMVA}
 PyMVA is a set of TMVA plugins based on Python API that opens additional machine-learning methods written in Python to be used from TMVA. Each PyMVA method inherits from the base class PyMethodBase, as illustrated in Figure \ref{pymvaplug}. Figure \ref{pymvadf} shows how PyArrayObject class is used to map the dataset from ROOT trees to numpy arrays. The following python-based methods from \cite{pedregosa2011scikit} are currently available in TMVA:
 
@@ -147,11 +153,19 @@ Figure \ref{pymvaroc} shows the ROC curves of various PyMVA methods for a basic 
 \includegraphics[width=25pc]{img/pymvaroc.png}\caption{\label{pymvaroc} ROC Curve for TMVA methods with Python.}
 \end{figure}
 
+\subsection{Conclusions}
+\begin{itemize}
+\item ROOT-R is a powerful interface to do avanced statistical analysis with R in ROOT.
+\item With DataLoader class with can perform classification and regression using different configurations with the datasets.
+\item RMVA shows the way to implement new methods from R in TMVA.
+\item PyMVA lets to show how we can integrate more tools even in python.
+\end{itemize}
+
+
 \clearpage
 \subsection{Acknowledgments}
-The work of Omar. A. Zapata has been partially supported by Sostenibilidad-UdeA, UdeA/CODI grant IN361CE
-and COLCIENCIAS through the grant number 111-556-934918.\newline
-Computer Science Center, Metropolitan Institute of Technology - Medellin/Colombia.
+The work of O. A. Zapata was partially supported by Sostenibilidad-UdeA, UdeA/CODI grant IN361CE
+and COLCIENCIAS grant 111-556-934918.\newline
 
 
 \section*{References}
