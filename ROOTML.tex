@@ -1,56 +1,57 @@
 \documentclass[a4paper]{jpconf}
+
 \usepackage{graphicx}
+
 \bibliographystyle{iopart-num}
+
+
+
+
 
 
 
 \begin{document}
 \title{Development of Machine Learning Tools in ROOT}
-
 \author{S. V. Gleyzer$^1$, L. Moneta$^2$, Omar A. Zapata$^3$, }
 
-
-
-
 \address{$^1$ University of Florida}
-
 \address{$^2$ CERN}
-
 \address{$^3$ University of Antioquia and Metropolitan Institute of Technology}
-
-
 \ead{Sergei.Gleyzer@cern.ch, Lorenzo.Moneta@cern.ch, Omar.Zapata@cern.ch}
 
 
-
-
 \begin{abstract}
-ROOT is a framework for large-scale data analysis that provides basic and advanced statistical methods used by the LHC experiments. In particular, these include machine learning algorithms from the ROOT-integrated Toolkit for Multivariate Analysis (TMVA). In what follows, we present several recent developments in TMVA such as new modular design, new variable importance and cross-validation features and interfaces to other statistical and machine-learning software packages written in R and python.
+ROOT is a framework for large-scale data analysis that provides basic and advanced statistical methods used by the LHC experiments. In particular, these include machine learning algorithms from the ROOT-integrated Toolkit for Multivariate Analysis (TMVA). In what follows, we present several recent developments in TMVA, such as new modular design, new variable importance and cross-validation functionality, as well as interfaces to other machine-learning software packages.
 \end{abstract}
 
 
 
 \section{Introduction}
-ROOT, an object-oriented data analysis framework, provides statistical methods, visualization and storage libraries for the data analysis of High-Energy Physics (HEP) experiments \cite{Antcheva20092499}. Although designed for HEP applications, ROOT is general enough and used outside of HEP. In addition to the above, ROOT provides machine learning tools with the Toolkit for Multivariate Analysis (TMVA) \cite{Hocker:2007ht}. TMVA provides a set of algorithms widely used in High Energy Physics (HEP) such as:
+ROOT is an object-oriented data analysis framework that provides statistical methods, visualization and storage libraries for data analysis of high-energy physics (HEP) experiments \cite{Antcheva20092499} such as the Large Hadron Collider (LHC) in Geneva, Switzerland. Although designed for HEP applications, ROOT is also widely used in other scientific fields outside of particle physics. ROOT provides machine learning tools with the Toolkit for Multivariate Analysis (TMVA) \cite{Hocker:2007ht} including algorithms widely used in High Energy Physics (HEP) such as:
+
+
 
 \begin{itemize}  
+\item Fisher and Linear Discriminants (LD)
 \item Boosted Decision Trees (BDT)
-\item Artificial Neural Networks (ANN)
+\item Decision Rule Ensembles
+\item k-Nearest Neighbor Classifier (KNN)
+\item Shallow Artificial Neural Networks (ANN)
+\item Deep Learning Neural Networks (DNN)
 \item Support Vector Machines (SVM)
-\item and others
 \end{itemize}
-Figure \ref{tmva:label} shows the relationship between ROOT, TMVA and other statistical packages like R. Recently, TMVA has  been undergoing significant improvements targeting greater flexibility, modular design and novel features and interfaces. In the next sections we describe some of the new functionality and features of TMVA.
+
+Of these, most widely used methods are boosted decision trees, neural networks and support vector machines. TMVA provides a way to compare the performance of these algorithms on the same data, allowing for an apples-to-apples comparison useful for choosing the optimal algorithm for a particular analysis task. TMVA provides implementations of these popular methods applicable for both machine-learning classification and regression. In the classification context, the machine-learning model is used to separate discrete classes of labeled data, while in the regression context, the machine-learning model is trained to estimate one or more continuous functions, for example the particle energy measured by a HEP detector.
 
 
-\begin{figure}[h]
-\centering
-\includegraphics[width=25pc]{img/tmva.png}\caption{\label{tmva:label} Machine Learning Tools in ROOT.}
-\end{figure}
 
-\subsection{DataLoader}
-DataLoader is a new class in TMVA that creates greater flexibility and modularity in training different combinations of classifiers and variables\cite{Hocker:2007ht}. Prior to the DataLoader class, the choice of variables was defined once and could not be changed later. In contrast, the DataLoader class allows a packaging of different choices of variables, methods with the data. This further makes other features, such as cross-validation and variable importance, to be implemented.
+\subsection{New Features}
+Recently, TMVA has  been undergoing significant improvements targeting greater flexibility, modular design and some new features and interfaces. In the next sections we describe some of the new functionality and features of TMVA.
 
-Multiple DataLoaders are possible at the same time. Figures \ref{dl1}, \ref{dl2} and \ref{dl3} show the structure of the DataLoader class. ROOT and comma-separated value (csv) files are supported in the DataLoader class.
+\subsubsection{Data Loader}
+One of these new developments and design features of TMVA is the DataLoader class. This class creates greater flexibility and modularity in training different combinations of classifiers and variables\. Previously, the choice of variables was defined once and could not be changed later. The DataLoader class allows a packaging of different choices of variables, methods with the data. This flexibility allowes additional features, such as cross-validation and variable importance, described in the following sections, to be implemented.
+Figures \ref{dl1}, \ref{dl2} and \ref{dl3} show the structure of the DataLoader class. Some of the new features and algorithms require several data loaders at the same time, which is done internally. The same functionality is available to the user as well. Various file formats, for example .root and comma-separated value (csv) files are supported in DataLoaders.
+
 
 
 \begin{figure}[h]
@@ -66,25 +67,43 @@ Multiple DataLoaders are possible at the same time. Figures \ref{dl1}, \ref{dl2}
 \end{minipage} 
 \end{figure}
 
-
-\subsection{New Features}
 In addition, a number of algorithms providing user with useful information have been added, such as cross-validation and variable importance. 
 
+
+
 \subsubsection{Cross Validation} 
+Cross-validation is a technique for evaluation of machine-learning models that is robust for generalization of the model to unseen data. During k-fold cross-validation, the dataset is partitioned into k folds or partitions. During one cross-validation round, k-1 folds are used for model training, and the other for model testing. Several rounds of cross-validation are performed with different partitions and model performance results are usually averaged. 
+One advantage of cross-validation over a simple split into training and testing set, is the ability to use the full dataset to validate the model. Performing cross-validation is known to reduce over-fitting of the data and generally leads to a more accurate estimate of the performance of the machine-learning model on unseen data. The first implementation of cross-validation in TMVA consisted of a script calling the TMVA factory, performing data-set splits for different folds and averaging the evaluation results externally. Now, this is done internally in TMVA with a standalone Cross-validation class. Figure \ref{_cv}a illustrates five receiver-operating characteristic (ROC) curves for each cross-validation fold for a basic TMVA example of a number of random variables with gaussian distributions plus several derived variables using basic mathematical expressions on these variables.
 
 \subsubsection{Variable Importance}
-Currently, TMVA provides a number of method-specific variable importance algorithms. Each one is relevant only to the method chosen and is computed during construction. For example, for decision trees variable importance is derived by counting the number of splits for each variable weighted by the square of the information gained from the split,   or for neural networks, as the sum of weights between the inputs and the hidden layer. In addition to these, a new method-independent variable algorithm was added. This algorithm based on ref.[] computes the variable importance in the context of classifier performance. In this method, a number of seeds are randomly generated in the feature space. Each seed corresponds to a feature set from which classifiers are constructed. Contribution to classifier performance of each feature is measured for each seed by removing the feature and measuring a change in classifier performance. Figure \ref{vi} shows a sample variable importance plot for a basic example in TMVA.
+Currently, TMVA provides a number of method-specific variable importance algorithms. Each one is relevant only to the method chosen and is computed during construction. For example, for decision trees variable importance is derived by counting the number of splits for each variable weighted by the square of the information gained from the split,   or for neural networks, as the sum of weights between the inputs and the hidden layer \cite{Hocker:2007ht}.
+In addition to these, a new method-independent variable algorithm was added. This algorithm based on \cite{gleyzer2008paradigm} computes the variable importance in the context of classifier performance. In this method, a number of seeds, each corresponding to a feature subspace, are randomly generated. For every seed, individual contributions to classifier performance are measured for each feature as a change in classifier performance due to removal of the feature. Figure \ref{_vi} shows a sample variable importance plot for a basic example in TMVA.
+
+
+
+\begin{figure}[h]
+\begin{minipage}{15pc}
+\includegraphics[width=20pc]{img/vi.png}
+\caption{\label{_vi} Histogram ranking the variables.}
+\end{minipage}\hspace{2pc}%
+\begin{minipage}{15pc}
+\includegraphics[width=20pc]{img/cv.pdf}
+\caption{\label{_cv} Cross validation ROC curves.}
+\end{minipage}\hspace{2pc}%
+\end{figure}
+
+
+\subsubsection{ROOT-R and RMVA}\label{ROOTR}
+Another useful functionality added to TMVA is the interface to R, called RMVA. R is a free software framework for statistical computing\cite{R}. Prior to RMVA, a ROOT-R interface package was developed that allowed the  use of R functions directly in ROOT. Creation of the ROOT-R interface opened a large set of statistical tools from R for use within ROOT. This includeds machine-learning packages interfaced with RMVA.
+Figure \ref{tmva:label} shows the relationship between ROOT, TMVA and other statistical packages like R. 
+The ROOT-R interface design is shown in Figure \ref{rootr:label}. 
+
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=25pc]{img/vi.png}\caption{\label{vi} Histogram ranking the variables.}
+\includegraphics[width=20pc]{img/tmva.png}\caption{\label{tmva:label} Machine Learning Tools in ROOT.}
 \end{figure}
 
-\clearpage
-\subsection{ROOT-R and RMVA}\label{ROOTR}
-R  is a free software framework for statistical computing\cite{R}. We developed the ROOT-R package which allows the  use of R functions directly in ROOT. This interface opens a large set of statistical tools in R for use within ROOT. 
-
-The ROOT-R interface design is shown in Figure \ref{rootr:label}. 
 
 
 \begin{figure}[h]
@@ -92,18 +111,22 @@ The ROOT-R interface design is shown in Figure \ref{rootr:label}.
 \includegraphics[width=25pc]{img/rootr.png}\caption{\label{rootr:label} ROOT-R design.}
 \end{figure}
 
-RMVA is a set of plugins for TMVA based on the ROOT-R interface. RMVA allows the use of machine-learning methods in R in TMVA.  
-RMethodBase is a class that lets to start the R environment using ROOT-R, import the required modules and map the DataLoader events in R's data frames objects using the class ROOT::R::TRDataFrame.
-Each of the methods inherits from the base class RMethodBase as shown in Figure \ref{rmvaplug}. Currently, the following methods are supported: 
+
+
+RMVA is a set of TMVA plugins based on the ROOT-R interface. It allows the use of machine-learning methods available in R directly from TMVA. The goal behind this is not to replace the R package itself but to allow its direct comparison with existing tools in TMVA for a given problem, and adding external methods to a user’s toolbox.   
+The RMethodBase class in TMVA starts the R environment using ROOT-R, imports the required modules and maps the DataLoader events in R data frame objects using the helper class ROOT::R::TRDataFrame.
+Each of the methods inherits from the base class RMethodBase as shown in Figure \ref{rmvaplug}. 
+Currently, the following machine-learning packages in R are already supported, while more can be added on demand: 
+
 
 \begin{itemize}  
-\item C5.0 decision trees and rule-based models (C500 \cite{c50}.
+\item Decision trees and rule-based models (C50) \cite{c50}.
 \item Stuttgart Neural Networks in R (SNNS)\cite{rsnns}.
 \item Support Vector Machines in R (e1071)\cite{e1071}.
-\item eXtreme Gradient Boost (xgboost) An optimized
-general purpose gradient boosting library\cite{chen2015xgboost}.
+\item eXtreme Gradient Boost (xgboost) An optimized general purpose gradient boosting library\cite{chen2015xgboost}.
 \end{itemize}
-Various machine-learning methods from R can be tried within the TMVA framework, as shown in Figure \ref{rmvaroc}.
+
+As shown in Figure \ref{rmvaroc} the above machine-learning methods from R can be tried within the TMVA framework as shown on the basic example.
 
 
 
@@ -120,19 +143,19 @@ Various machine-learning methods from R can be tried within the TMVA framework, 
 
 
 
+
+
 \begin{figure}[h]
 \centering
 \includegraphics[width=25pc]{img/rmvaroc.png}\caption{\label{rmvaroc} ROC Curves for RMVA methods}
 \vspace{10cm}
 \end{figure}
 
-\clearpage
-\subsection{Python with TMVA (PyMVA)} \label{PYMVA}
-PyMVA is a set of TMVA plugins based on Python API that opens additional machine-learning methods written in Python to be used from TMVA. 
-PyMethodBase is a class that lets to start the Python environment, import the required modules and map the DataLoader events in numpy arrays using C-API from numpy and it has 
-methods like PyMethodBase::Eval to eval Python code and methods like Serialize/UnSerialize to save/load the trained model from files.
-Each PyMVA method inherits from the base class PyMethodBase, as illustrated in Figure \ref{pymvaplug}. 
-Figure \ref{pymvadf} shows how PyArrayObject class is used to map the dataset from ROOT trees to numpy arrays. The following python-based methods from \cite{pedregosa2011scikit} are currently available in TMVA:
+
+
+\subsubsection{Python with TMVA (PyMVA)} \label{PYMVA}
+Similarly to RMVA, PyMVA is a set of TMVA plugins based on Python API that allows direct use of machine-learning methods written in Python from within TMVA. The goal, similarly to RMVA, is not to replace the original method, but to allow the comparison of the method with the other methods in TMVA using the same dataset, selections and performance metrics. 
+The PyMethodBase class in PyMVA initializes the Python environment, imports the required modules and maps the DataLoader events in numpy arrays using C-API. Each PyMVA method inherits from the base class PyMethodBase, as illustrated in Figure \ref{pymvaplug}. Figure \ref{pymvadf} shows how the dataset is mapped from ROOT trees to numpy arrays. The following python-based methods from \cite{pedregosa2011scikit} are currently available in TMVA which others can be added on demand:
 
 
 \begin{itemize}
@@ -140,7 +163,12 @@ Figure \ref{pymvadf} shows how PyArrayObject class is used to map the dataset fr
 \item Gradient Boosted Regression Trees (PyGTB) 
 \item Adaptive Boosting (PyAdaBoost) 
 \end{itemize}
+
 Figure \ref{pymvaroc} shows the ROC curves of various PyMVA methods for a basic example.
+
+
+
+
 
 
 
@@ -157,32 +185,50 @@ Figure \ref{pymvaroc} shows the ROC curves of various PyMVA methods for a basic 
 \end{figure}
 
 
+
+
+
 \begin{figure}[h]
 \centering
 \includegraphics[width=25pc]{img/pymvaroc.png}\caption{\label{pymvaroc} ROC Curve for TMVA methods with Python.}
 \end{figure}
 
+
+\subsubsection{TMVA and Jupyter Notebooks}
+Another new feature in TMVA is the integration of TMVA and Jupyter Notebooks \cite{PER-GRA:2007}. Jupyter is a web application that combines live code, rich text, links and formulas in a user-friendly format. With the creation of a ROOT Jupyter kernel, additional integration of machine-learning tools in ROOT with Jupyter notebooks became possible. Currently, all the functionality of TMVA is available in Jupyter notebooks, requiring only access to a browser to run and execute TMVA.
+
 \subsection{Conclusions}
-\begin{itemize}
-\item ROOT-R is a powerful interface to do avanced statistical analysis with R in ROOT.
-\item With DataLoader class with can perform classification and regression using different configurations with the datasets.
-\item RMVA shows the way to implement new methods from R in TMVA.
-\item PyMVA lets to show how we can integrate more tools even in python.
-\end{itemize}
+Machine learning tools in ROOT have been undergoing a significant makeover and upgrade. In particular, TMVA has a new design targeting greater flexibility and modularity that includes new features such as cross-validation, variable importance and interfaces to R and python-based machine-learning tools. In addition, all the TMVA functionality is available in Jupyter notebooks, making it accessible through a web browser.
 
 
-\clearpage
+
+
 \subsection{Acknowledgments}
-The work of O. A. Zapata was partially supported by Sostenibilidad-UdeA, UdeA/CODI grant IN361CE
-and COLCIENCIAS grant 111-556-934918.\newline
+The work of O. A. Zapata was partially supported by Sostenibilidad-UdeA, UdeA/CODI grant IN361CE and COLCIENCIAS grant 111-556-934918.\newline
+
+
+
 
 
 \section*{References}
 \bibliography{iopart-num}
-
 \end{document}
 
+
+
 % \end{document}
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
