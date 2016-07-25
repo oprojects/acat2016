@@ -97,20 +97,16 @@ Another useful functionality added to TMVA is the interface to R, called RMVA. R
 \end{figure}
 
 \subsubsection{RMVA Interface}\label{RMVA}\hspace*{\fill} \\
-RMVA is a set of TMVA plugins based on the ROOT-R interface. It allows the use of machine-learning methods available in R directly from TMVA. The goal behind RMVA is not to replace the R package itself but to allow its direct comparison with existing tools in TMVA for a given problem, while adding more methods to TMVA user’s toolbox.
-   
-
+RMVA is a set of TMVA plugins based on the ROOT-R interface. It allows the use of machine-learning methods available in R directly from TMVA. The goal behind RMVA is not to replace the R package itself but to allow its direct comparison with existing tools in TMVA for a given problem, while adding more methods to TMVA user’s toolbox.\newline
 The RMethodBase class in TMVA starts the R environment using ROOT-R, imports the required modules and maps the DataLoader events in R data frame objects using the helper class ROOT::R::TRDataFrame.
 Each of the methods inherits from the base class RMethodBase as shown in Figure \ref{rmvaplug}. 
 Currently, the following machine-learning packages in R are supported: 
-
 \begin{itemize}  
 \item Decision trees and rule-based models (C50) \cite{c50}.
 \item Stuttgart Neural Networks in R (SNNS)\cite{rsnns}.
 \item Support Vector Machines in R (e1071)\cite{e1071}.
 \item eXtreme Gradient Boost (xgboost) An optimized general purpose gradient boosting library\cite{chen2015xgboost}.
 \end{itemize}
-
 As shown in Figure \ref{rmvaroc} the above machine-learning methods in R can be executed within the TMVA framework for a basic example.
 
 
@@ -131,18 +127,13 @@ As shown in Figure \ref{rmvaroc} the above machine-learning methods in R can be 
 
 
 \subsubsection{Python with TMVA (PyMVA)} \label{PYMVA}\hspace*{\fill} \\
-Similarly to RMVA, PyMVA is a set of TMVA plugins based on Python API that allows direct use of machine-learning methods written in Python from within TMVA. The goal, similarly to RMVA, is not to replace the original method, but to allow the comparison of the method with the other methods in TMVA using the same dataset, selections and performance metrics. 
-
+Similarly to RMVA, PyMVA is a set of TMVA plugins based on Python API that allows direct use of machine-learning methods written in Python from within TMVA. The goal, similarly to RMVA, is not to replace the original method, but to allow the comparison of the method with the other methods in TMVA using the same dataset, selections and performance metrics.\newline
 The PyMethodBase class in PyMVA initializes the Python environment, imports the required modules and maps the DataLoader events in numpy arrays using C-API. Each PyMVA method inherits from the base class PyMethodBase, as illustrated in Figure \ref{pymvaplug}. Figure \ref{pymvadf} shows how the dataset is mapped from ROOT trees to numpy arrays. The following python-based methods from \cite{pedregosa2011scikit} are currently available in TMVA which others can be added on demand:
-
-
-
 \begin{itemize}
 \item Random Forest (PyRandomForest)
 \item Gradient Boosted Regression Trees (PyGTB) 
 \item Adaptive Boosting (PyAdaBoost) 
 \end{itemize}
-
 Figure \ref{pymvaroc} shows the ROC curves of various PyMVA methods for a basic example.
 
 
