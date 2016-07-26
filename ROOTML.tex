@@ -22,7 +22,7 @@ ROOT is a framework for large-scale data analysis that provides basic and advanc
 
 
 \section{Introduction}
-ROOT is an object-oriented data analysis framework that provides statistical methods, visualization and storage libraries for data analysis of high-energy physics (HEP) experiments such as the Large Hadron Collider (LHC) in Geneva, Switzerland \cite{Antcheva20092499}. Although originally designed for HEP applications, ROOT is also widely used in other scientific fields outside of particle physics.\newline 
+ROOT is an object-oriented data analysis framework that provides statistical methods, visualization and storage libraries for data analysis of high-energy physics (HEP) experiments such as the Large Hadron Collider (LHC) in Geneva, Switzerland \cite{Antcheva20092499}. Although originally designed for HEP applications, ROOT is also widely used in other scientific fields outside of particle physics.\newline\newline 
 The ROOT framework provides machine learning tools with the Toolkit for Multivariate Analysis (TMVA) \cite{Hocker:2007ht} including widely-used algorithms in High Energy Physics (HEP) such as:
 \begin{itemize}  
 \item Fisher and Linear Discriminants (LD)
@@ -39,7 +39,7 @@ Of these, most widely-used methods in HEP are boosted decision trees, neural net
 Recently, TMVA has  been undergoing a significant makeover targeting greater flexibility, modular design and some new features and interfaces. A number of algorithms providing a user with useful information have been added, such as cross-validation and variable importance. Several interfaces to external machine-learning packages have been implemented, and TMVA has been integrated with Jupyter, allowing it to be executed within a browser. In the next sections we describe some of the new functionality and features of TMVA.
 
 \subsubsection{Data Loader}\hspace*{\fill} \\
-One of these new design developments in TMVA is the DataLoader class. This class creates greater flexibility and modularity in training different combinations of classifiers and variables. Previously, the choice of variables was defined once and could not be changed later. The DataLoader class allows a packaging of different choices of variables, methods with the data. This design flexibility allows additional functionality, such as cross-validation and variable importance, described in the following sections, to be implemented.\newline
+One of these new design developments in TMVA is the DataLoader class. This class creates greater flexibility and modularity in training different combinations of classifiers and variables. Previously, the choice of variables was defined once and could not be changed later. The DataLoader class allows a packaging of different choices of variables, methods with the data. This design flexibility allows additional functionality, such as cross-validation and variable importance, described in the following sections, to be implemented.\newline\newline
 Figures \ref{dl1}, \ref{dl2} and \ref{dl3} show the structure of the DataLoader class. Some of the new features require several Dataloaders at the same time, which is done internally. The same functionality is available to the user as well. Various file formats, for example .root and comma-separated value (.csv) files are supported in DataLoaders.
 
 \begin{figure}[h]
@@ -60,11 +60,11 @@ Figures \ref{dl1}, \ref{dl2} and \ref{dl3} show the structure of the DataLoader 
 
 
 \subsubsection{Cross Validation}\hspace*{\fill} \\ 
-Cross-validation is a technique for machine-learning model evaluation important for the generalization of the model to unseen data. During k-fold cross-validation, the dataset is partitioned into k folds or partitions. During one cross-validation round, k-1 folds are used for model training, and the remaining fold for model testing. Several rounds of cross-validation are performed with different partitions and model performance results are averaged. One advantage of cross-validation over a simple split into training and testing set, is the ability to use the full dataset to validate the model. Performing cross-validation is known to reduce over-fitting of the data and generally leads to a more accurate estimate of the performance of the machine-learning model on unseen data \cite{arlot2010survey}.\newline 
+Cross-validation is a technique for machine-learning model evaluation important for the generalization of the model to unseen data. During k-fold cross-validation, the dataset is partitioned into k folds or partitions. During one cross-validation round, k-1 folds are used for model training, and the remaining fold for model testing. Several rounds of cross-validation are performed with different partitions and model performance results are averaged. One advantage of cross-validation over a simple split into training and testing set, is the ability to use the full dataset to validate the model. Performing cross-validation is known to reduce over-fitting of the data and generally leads to a more accurate estimate of the performance of the machine-learning model on unseen data \cite{arlot2010survey}.\newline\newline 
 The first implementation of cross-validation in TMVA consisted of a script calling the TMVA factory, performing dataset splits for different folds and averaging the evaluation results externally. Now, this is done internally in TMVA with a standalone CrossValidation class. Figure \ref{_cv}a illustrates five receiver-operating characteristic (ROC) curves for each cross-validation fold showing model performance for each fold for a basic TMVA example. This example has four random variables with gaussian distributions plus several derived variables obtained after applying basic mathematical operations on these variables.
 
 \subsubsection{Variable Importance}\hspace*{\fill} \\
-Currently, TMVA provides a number of method-specific variable importance algorithms. Each one is relevant only to the method chosen and is computed during construction. For example, for decision trees variable importance is derived by counting the number of splits for each variable weighted by the square of the information gained from the split,   or for neural networks, as the sum of weights between the inputs and the hidden layer \cite{Hocker:2007ht}.\newline
+Currently, TMVA provides a number of method-specific variable importance algorithms. Each one is relevant only to the method chosen and is computed during construction. For example, for decision trees variable importance is derived by counting the number of splits for each variable weighted by the square of the information gained from the split,   or for neural networks, as the sum of weights between the inputs and the hidden layer \cite{Hocker:2007ht}.\newline\newline
 In addition to these, a new method-independent variable algorithm was added. This algorithm described in\cite{gleyzer2008paradigm} computes variable importance in the context of classifier performance. A number of seeds are randomly generated, each corresponding to a feature subspace. For each seed, individual feature contributions to classifier performance are measured as loss of classifier performance due to the removal of a feature. Figure \ref{_vi} shows a sample variable importance plot for a basic example in TMVA.
 
 
@@ -97,7 +97,7 @@ Another useful functionality added to TMVA is the interface to R, called RMVA. R
 \end{figure}
 
 \subsubsection{RMVA Interface}\label{RMVA}\hspace*{\fill} \\
-RMVA is a set of TMVA plugins based on the ROOT-R interface. It allows the use of machine-learning methods available in R directly from TMVA. The goal behind RMVA is not to replace the R package itself but to allow its direct comparison with existing tools in TMVA for a given problem, while adding more methods to TMVA user’s toolbox.\newline
+RMVA is a set of TMVA plugins based on the ROOT-R interface. It allows the use of machine-learning methods available in R directly from TMVA. The goal behind RMVA is not to replace the R package itself but to allow its direct comparison with existing tools in TMVA for a given problem, while adding more methods to TMVA user’s toolbox.\newline\newline
 The RMethodBase class in TMVA starts the R environment using ROOT-R, imports the required modules and maps the DataLoader events in R data frame objects using the helper class ROOT::R::TRDataFrame.
 Each of the methods inherits from the base class RMethodBase as shown in Figure \ref{rmvaplug}. 
 Currently, the following machine-learning packages in R are supported: 
@@ -121,6 +121,7 @@ As shown in Figure \ref{rmvaroc} the above machine-learning methods in R can be 
 \caption{\label{rmvadf}ROOTR and TMVA data flow.}
 \end{minipage}\hspace{2pc}%
 \vspace{2pc}%
+\hspace*{\fill} \\
 \includegraphics[width=25pc]{img/rmvaroc.png}\caption{\label{rmvaroc} ROC Curves for RMVA methods}
 \end{figure}
 
@@ -146,9 +147,10 @@ Figure \ref{pymvaroc} shows the ROC curves of various PyMVA methods for a basic 
 \begin{minipage}{15pc}
 \includegraphics[width=15pc]{img/pymvadf.png}
 \vspace{6pc}%
-\caption{\label{pymvadf}Python and TMVA data flow.}
+\caption{\label{pymvadf}Python and TMVA data flow.                                 }
 \end{minipage}\hspace{2pc}%
 \vspace{2pc}
+\hspace*{\fill} \\
 \includegraphics[width=25pc]{img/pymvaroc.png}\caption{\label{pymvaroc} ROC Curve for TMVA methods with Python.}
 \end{figure}
 
